@@ -1,0 +1,99 @@
+<!doctype html>
+{% load static %}
+<html>
+  <head>
+    <meta charset="UTF-8">
+	<title>Greetings Cards Spammers</title>
+	<link rel="stylesheet" href="{% static 'core/js/vendor/bootstrap/bootstrap.min.css' %}" type="text/css">
+	<link rel="stylesheet" href="{% static 'core/css/base.css' %}" type="text/css">
+	{% block css %}{% endblock %}
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <a class="navbar-brand" href="#">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          {% if user.is_authenticated %}
+            <li class="nav-item active">
+              <a class="nav-link" href="/user/logout/">Logout</a>
+            </li>
+          {% else %}
+            <li class="nav-item active">
+              <a class="nav-link" href="/user/login/">Login</a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+	<div id="wrap">
+      <div class="mt-5" id="main" class="container clear-top">
+          {% block body %}{% endblock %}
+		  <div class="row">
+			<div class="col-md-10 offset-md-1">
+				<h2>
+					<span>Greetings Cards Spammers</span>
+				</h2>
+			</div>
+		</div>
+		<div class="row mt-4">
+			<div class="col-md-10 offset-md-1">
+				<table>
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Order Count</th>
+							<th>Order Sum</th>
+							<th>Select</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for company in company_list %}
+							<tr>
+								<td>{{ company.name }}</td>
+								<td>{{ company.get_order_count }}</td>
+								<td>{{ company.get_order_sum|floatformat:2 }}</td>
+								<td><input type="checkbox" name="select{{company.pk}}" id=""></td>
+							</tr>
+							{% for contact in company.contacts.all %}
+							<tr>
+								<td>&nbsp;</td>
+								<td>{{ contact.first_name }} {{ contact.last_name }}</td>
+								<td>Orders: {{ contact.get_order_count }}</td>
+								<td></td>
+							</tr>
+							{% endfor %}
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row mt-4">
+			{% if is_paginated %}
+				<div class="col-md-10 offset-md-1">
+					{% if page_obj.has_previous %}
+						<a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-dark btn-sm loading-on-click">Previous Page</a>
+					{% endif %}
+					{% if page_obj.has_next %}
+						<a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-dark btn-sm loading-on-click">Next Page</a>
+					{% endif %}
+				</div>
+			{% endif %}
+		</div>
+      </div>
+	</div>
+    <footer id="footer" class="page-footer footer font-small mt-5">
+      <div class="footer-copyright ml-3 text-white py-3">
+        <p>© 2021 Copyright: Shuup</p>
+      </div>
+    </footer>
+    <script src="{% static 'core/js/vendor/jquery/jquery-3.5.1.min.js' %}" type="text/javascript"></script>
+	<script src="{% static 'core/js/vendor/bootstrap/bootstrap.min.js' %}" type="text/javascript"></script>
+	<script src="{% static 'core/js/vendor/loadingoverlay/loadingoverlay.min.js' %}" type="text/javascript"></script>
+	<script src="{% static 'core/js/loading.js' %}" type="text/javascript"></script>
+    {% block js %}{% endblock %}
+  </body>
+</html>

@@ -1,0 +1,48 @@
+.navbar {
+    background-color: #12395b!important;
+}
+
+.navbar-light .navbar-nav .active>.nav-link {
+    color: white!important;
+}
+
+.loadingoverlay_element {
+    color: #12395b!important;
+}
+
+.navbar-light .navbar-brand {
+    color: white!important;
+}
+
+.accordion-button:not(.collapsed) {
+    color: white!important;
+    background-color: #12395b!important;
+}
+
+.accordion-button::after {
+    color: white!important;
+}
+
+.btn-link {
+    color: black!important;
+}
+
+.dataTables_info {
+    display: none!important;
+}
+
+.breadcrumb-link {
+    color:black;
+}
+
+a:hover {
+  color: black;
+}
+
+.breadcrumb {
+    background-color: rgba(0,0,0,.03)!important;
+}
+
+.dataTables_length {
+    display: none!important;
+}

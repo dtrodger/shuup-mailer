@@ -1,0 +1,58 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block body %}
+	<div class="row">
+		<div class="col-md-10 offset-md-1">
+			<h2>
+				<span>Greetings Cards Spammers</span>
+			</h2>
+		</div>
+	</div>
+	<div class="row mt-4">
+		<div class="col-md-10 offset-md-1">
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Order Count</th>
+						<th>Order Sum</th>
+						<th>Select</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for company in company_list %}
+						<tr>
+							<td>{{ company.name }}</td>
+							<td>{{ company.get_order_count }}</td>
+							<td>{{ company.get_order_sum|floatformat:2 }}</td>
+							<td><input type="checkbox" name="select{{company.pk}}" id=""></td>
+						</tr>
+						{% for contact in company.contacts.all %}
+						<tr>
+							<td>&nbsp;</td>
+							<td>{{ contact.first_name }} {{ contact.last_name }}</td>
+							<td>Orders: {{ contact.get_order_count }}</td>
+							<td></td>
+						</tr>
+						{% endfor %}
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row mt-4">
+		{% if is_paginated %}
+			<div class="col-md-10 offset-md-1">
+				{% if page_obj.has_previous %}
+					<a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-dark btn-sm loading-on-click">Previous Page</a>
+				{% endif %}
+				{% if page_obj.has_next %}
+					<a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-dark btn-sm loading-on-click">Next Page</a>
+				{% endif %}
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}
+{% block js %}
+	<script src="{% static 'mailer/js/index.js' %}" type="text/javascript"></script>
+{% endblock %}

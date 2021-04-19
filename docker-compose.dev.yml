@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  redis:
+    container_name: shuup-redis-1
+    image: redis
+    ports:
+      - 6379:6379
+    networks:
+      - shuup
+    volumes:
+      - shuup-redis:/data
+    restart: always
+
+networks:
+  shuup:
+    driver: "bridge"
+
+volumes:
+  shuup-redis:
